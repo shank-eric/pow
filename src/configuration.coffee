@@ -130,6 +130,7 @@ module.exports = class Configuration
     # server.
     @dnsDomainPattern  = compilePattern @domains
     @httpDomainPattern = compilePattern @allDomains
+    @staticHeaders = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE', 'Access-Control-Allow-Headers': 'Content-Type' }
 
   # Gets an object of the `Configuration` instance's options that can
   # be passed to `JSON.stringify`.
@@ -255,3 +256,4 @@ rstat = (path, callback) ->
 # regular expression for matching purposes.
 compilePattern = (domains) ->
   /// ( (^|\.) (#{domains.join("|")}) ) \.? $ ///i
+

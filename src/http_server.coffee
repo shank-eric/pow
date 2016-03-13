@@ -158,6 +158,9 @@ module.exports = class HttpServer extends connect.HTTPServer
       return next()
 
     handler = @staticHandlers[root] ?= connect.static(join(root, "public"), redirect: false)
+    if @configuration.staticHeaders?
+      for key, value of @configuration.staticHeaders
+        res.setHeader key, value
     handler req, res, next
 
   # Check to see if the application root contains a `config.ru`
