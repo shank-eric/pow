@@ -161,6 +161,13 @@ module.exports = class HttpServer extends connect.HTTPServer
     if @configuration.staticHeaders?
       for key, value of @configuration.staticHeaders
         res.setHeader key, value
+
+    parsed = url.parse req.url
+    if parsed.pathname.match(/\.mp3/)
+      f = fs.readFileSync(join(root, 'public', parsed.pathname)).toString()
+      if (f.indexOf('https://git-lfs.github.com/spec') > -1)
+        res.setHeader('Content-Type', 'application/vnd.git-lfs+json')
+
     handler req, res, next
 
   # Check to see if the application root contains a `config.ru`
